@@ -9,9 +9,9 @@ def get_clean_data() -> tuple[list[int], list[int]]:
         data = f.readlines()
         lv, rv = [], []
         for line in data:
-            l, r = line.strip().split()
-            lv.append(int(l))
-            rv.append(int(r))
+            left, right = line.strip().split()
+            lv.append(int(left))
+            rv.append(int(right))
 
         lv.sort()
         rv.sort()
@@ -19,15 +19,16 @@ def get_clean_data() -> tuple[list[int], list[int]]:
         return lv, rv
 
 
+lv, rv = get_clean_data()
+
+
 def part1() -> int:
-    lv, rv = get_clean_data()
-    return sum(abs(l - r) for l, r in zip(lv, rv))
+    return sum(abs(left - right) for left, right in zip(lv, rv))
 
 
 def part2() -> int:
-    lv, rv = get_clean_data()
     r_map = Counter(rv)
-    return sum(l * r_map[l] for l in lv)
+    return sum(left * r_map[left] for left in lv)
 
 
 if __name__ == "__main__":
