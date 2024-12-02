@@ -6,7 +6,7 @@ PATH_TO_FILE = f"{os.path.dirname(os.path.realpath(__file__))}/data.in"
 def parse_input() -> list[list[int]]:
     with open(PATH_TO_FILE, "r") as f:
         data = f.readlines()
-        reports = []
+        reports: list[list[int]] = []
         for line in data:
             reports.append([int(x) for x in line.split()])
 
