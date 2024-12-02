@@ -29,14 +29,18 @@ def is_diff_within_thresh(lst: list[int]) -> bool:
     return True
 
 
+def validate_report(report: list[int]) -> bool:
+    return (
+        is_mono_increasing(report) or is_mono_decreasing(report)
+    ) and is_diff_within_thresh(report)
+
+
 def part1() -> int:
     reports = parse_input()
     res = 0
 
     for report in reports:
-        if (
-            is_mono_increasing(report) or is_mono_decreasing(report)
-        ) and is_diff_within_thresh(report):
+        if validate_report(report):
             res += 1
 
     return res
@@ -47,16 +51,12 @@ def part2():
     res = 0
 
     for report in reports:
-        if (
-            is_mono_increasing(report) or is_mono_decreasing(report)
-        ) and is_diff_within_thresh(report):
+        if validate_report(report):
             res += 1
         else:
             for i in range(len(report)):
                 without_i = report[:i] + report[i + 1 :]
-                if (
-                    is_mono_increasing(without_i) or is_mono_decreasing(without_i)
-                ) and is_diff_within_thresh(without_i):
+                if validate_report(without_i):
                     res += 1
                     break
 
