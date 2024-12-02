@@ -4,7 +4,7 @@ from collections import Counter
 PATH_TO_FILE = f"{os.path.dirname(os.path.realpath(__file__))}/data.in"
 
 
-def get_clean_data() -> tuple[list[int], list[int]]:
+def parse_input() -> tuple[list[int], list[int]]:
     with open(PATH_TO_FILE, "r") as f:
         data = f.readlines()
         lv, rv = [], []
@@ -19,7 +19,7 @@ def get_clean_data() -> tuple[list[int], list[int]]:
         return lv, rv
 
 
-lv, rv = get_clean_data()
+lv, rv = parse_input()
 
 
 def part1() -> int:
