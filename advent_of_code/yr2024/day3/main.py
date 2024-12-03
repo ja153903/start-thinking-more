@@ -8,12 +8,12 @@ def parse_input():
     with open(PATH_TO_FILE, "r") as f:
         input = f.read()
         results = re.findall(r"mul\((?P<l>\d+),(?P<r>\d+)\)", input)
-        return [(int(l), int(r)) for l, r in results]
+        return [(int(left), int(right)) for left, right in results]
 
 
 def part1():
     data = parse_input()
-    return sum(l * r for l, r in data)
+    return sum(left * right for left, right in data)
 
 
 def parse_input_pt2():
@@ -25,12 +25,11 @@ def parse_input_pt2():
 def part2():
     data = parse_input_pt2()
     res = 0
-
     add = True
 
-    for patt, l, r in data:
+    for patt, left, right in data:
         if patt.startswith("mul") and add:
-            res += int(l) * int(r)
+            res += int(left) * int(right)
         elif patt.startswith("don't"):
             add = False
         elif patt.startswith("do"):
