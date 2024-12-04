@@ -41,8 +41,6 @@ def part1():
                     ci, cj = i, j
                     cur_itr = 1
 
-                    broke_out = False
-
                     while (
                         0 <= ci <= len(grid) and 0 <= cj <= len(grid[0]) and cur_itr < 4
                     ):
@@ -54,13 +52,12 @@ def part1():
                             or nj >= len(grid[0])
                             or grid[ni][nj] != cur_itr + 1
                         ):
-                            broke_out = True
                             break
 
                         ci, cj = ni, nj
                         cur_itr = grid[ni][nj]
 
-                    if not broke_out and cur_itr == 4:
+                    if cur_itr == 4:
                         res += 1
 
     return res
