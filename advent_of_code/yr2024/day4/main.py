@@ -27,7 +27,7 @@ def parse_input():
         return result
 
 
-directions = ((1, 0), (-1, 0), (0, 1), (0, -1), (1, 1), (1, -1), (-1, 1), (-1, -1))
+DIRECTIONS = ((1, 0), (-1, 0), (0, 1), (0, -1), (1, 1), (1, -1), (-1, 1), (-1, -1))
 
 
 def part1():
@@ -37,7 +37,7 @@ def part1():
     for i, row in enumerate(grid):
         for j, col in enumerate(row):
             if col == 1:
-                for di, dj in directions:
+                for di, dj in DIRECTIONS:
                     ci, cj = i, j
                     cur_itr = 1
 
