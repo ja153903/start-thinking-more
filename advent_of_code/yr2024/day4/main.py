@@ -63,31 +63,31 @@ def part1():
     return res
 
 
-def is_mono_increasing_by_thresh(lst: list[int], thresh: int) -> bool:
+def is_mono_increasing_by_one(lst: list[int]) -> bool:
     for i in range(1, len(lst)):
-        if lst[i] - lst[i - 1] != thresh:
+        if lst[i] - lst[i - 1] != 1:
             return False
     return True
 
 
-def is_mono_decreasing_by_thresh(lst: list[int], thresh: int) -> bool:
+def is_mono_decreasing_by_one(lst: list[int]) -> bool:
     for i in range(1, len(lst)):
-        if lst[i - 1] - lst[i] != thresh:
+        if lst[i - 1] - lst[i] != 1:
             return False
     return True
 
 
 def is_mas_dos(grid: list[list[int]], row_start: int, col_start: int) -> bool:
     diag_down = [grid[row_start + i][col_start + i] for i in range(3)]
-    if not is_mono_increasing_by_thresh(
-        diag_down, 1
-    ) and not is_mono_decreasing_by_thresh(diag_down, 1):
+    if not is_mono_increasing_by_one(diag_down) and not is_mono_decreasing_by_one(
+        diag_down
+    ):
         return False
 
     diag_up = [grid[row_start + 2 - i][col_start + i] for i in range(3)]
-    if not is_mono_increasing_by_thresh(
-        diag_up, 1
-    ) and not is_mono_decreasing_by_thresh(diag_up, 1):
+    if not is_mono_increasing_by_one(diag_up) and not is_mono_decreasing_by_one(
+        diag_up
+    ):
         return False
 
     return True
