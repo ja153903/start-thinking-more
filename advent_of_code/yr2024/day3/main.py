@@ -7,7 +7,9 @@ PATH_TO_FILE = f"{os.path.dirname(os.path.realpath(__file__))}/data.in"
 def parse_input():
     with open(PATH_TO_FILE, "r") as f:
         input = f.read()
-        results = re.findall(r"mul\((?P<l>\d+),(?P<r>\d+)\)", input)
+        results: list[tuple[str, str]] = re.findall(
+            r"mul\((?P<l>\d+),(?P<r>\d+)\)", input
+        )
         return [(int(left), int(right)) for left, right in results]
 
 
@@ -23,7 +25,7 @@ def parse_input_pt2():
 
 
 def part2():
-    data = parse_input_pt2()
+    data: list[tuple[str, str, str]] = parse_input_pt2()
     res = 0
     add = True
 
