@@ -1,4 +1,3 @@
-from collections import deque
 import os
 
 PATH_TO_FILE = f"{os.path.dirname(os.path.realpath(__file__))}/data.in"
@@ -35,39 +34,34 @@ def part1():
     grid = parse_input()
     res = 0
 
-    q: deque[tuple[int, int, int]] = deque()
-
     for i, row in enumerate(grid):
         for j, col in enumerate(row):
             if col == 1:
-                q.append((i, j, 1))
+                for di, dj in directions:
+                    ci, cj = i, j
+                    cur_itr = 1
 
-    while q:
-        i, j, itr = q.popleft()
+                    broke_out = False
 
-        for di, dj in directions:
-            ci, cj = i, j
-            cur_itr = itr
+                    while (
+                        0 <= ci <= len(grid) and 0 <= cj <= len(grid[0]) and cur_itr < 4
+                    ):
+                        ni, nj = ci + di, cj + dj
+                        if (
+                            ni < 0
+                            or nj < 0
+                            or ni >= len(grid)
+                            or nj >= len(grid[0])
+                            or grid[ni][nj] != cur_itr + 1
+                        ):
+                            broke_out = True
+                            break
 
-            broke_out = False
+                        ci, cj = ni, nj
+                        cur_itr = grid[ni][nj]
 
-            while 0 <= ci <= len(grid) and 0 <= cj <= len(grid[0]) and cur_itr < 4:
-                ni, nj = ci + di, cj + dj
-                if (
-                    ni < 0
-                    or nj < 0
-                    or ni >= len(grid)
-                    or nj >= len(grid[0])
-                    or grid[ni][nj] != cur_itr + 1
-                ):
-                    broke_out = True
-                    break
-
-                ci, cj = ni, nj
-                cur_itr = grid[ni][nj]
-
-            if not broke_out and cur_itr == 4:
-                res += 1
+                    if not broke_out and cur_itr == 4:
+                        res += 1
 
     return res
 
