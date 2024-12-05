@@ -43,12 +43,19 @@ def part1():
                 is_legal_update = False
                 break
 
-        if not is_legal_update:
-            continue
-
-        res += int(update[len(update) // 2])
+        if is_legal_update:
+            res += int(update[len(update) // 2])
 
     return res
+
+
+def sort_update(update: list[str], prerequisites: defaultdict[str, set[str]]):
+    for i in range(1, len(update)):
+        j = i
+
+        while j > 0 and update[j] in prerequisites[update[j - 1]]:
+            update[j], update[j - 1] = update[j - 1], update[j]
+            j -= 1
 
 
 def part2():
@@ -60,22 +67,15 @@ def part2():
 
     for update in updates:
         is_legal_update = True
+
         for i in range(1, len(update)):
             if update[i - 1] not in prerequisites[update[i]]:
                 is_legal_update = False
                 break
 
-        if is_legal_update:
-            continue
-
-        for i in range(1, len(update)):
-            j = i
-
-            while j > 0 and update[j] in prerequisites[update[j - 1]]:
-                update[j], update[j - 1] = update[j - 1], update[j]
-                j -= 1
-
-        res += int(update[len(update) // 2])
+        if not is_legal_update:
+            sort_update(update, prerequisites)
+            res += int(update[len(update) // 2])
 
     return res
 
