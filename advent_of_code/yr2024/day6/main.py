@@ -16,16 +16,17 @@ direction = {"^": (-1, 0), ">": (0, 1), "v": (1, 0), "<": (0, -1)}
 
 
 def turn_right(current_direction: str) -> str:
-    if current_direction == "^":
-        return ">"
-    elif current_direction == ">":
-        return "v"
-    elif current_direction == "v":
-        return "<"
-    elif current_direction == "<":
-        return "^"
-    else:
-        raise ValueError(f"Invalid direction: {current_direction}")
+    match current_direction:
+        case "^":
+            return ">"
+        case ">":
+            return "v"
+        case "v":
+            return "<"
+        case "<":
+            return "^"
+        case _:
+            raise ValueError(f"Invalid direction: {current_direction}")
 
 
 def part1() -> int:
@@ -101,8 +102,6 @@ def part2():
     positions = 0
 
     for i, j in visited:
-        # as a heuristic, we'll say that we're in an infinite loop
-        # if any coordinate has been visited more than 3 times?
         visited_counter: Counter[tuple[int, int]] = Counter()
 
         temp = grid[i][j]
@@ -114,10 +113,6 @@ def part2():
         while 0 <= cx < len(grid) and 0 <= cy < len(grid[0]):
             visited_counter[(cx, cy)] += 1
 
-            if visited_counter[(cx, cy)] > 3:
-                positions += 1
-                break
-
             next_direction = direction[current_direction]
 
             nx, ny = cx + next_direction[0], cy + next_direction[1]
@@ -127,6 +122,12 @@ def part2():
 
             if grid[nx][ny] == "#":
                 current_direction = turn_right(current_direction)
+
+                # as a heuristic, we'll say that we're in an infinite loop
+                # if we've turned at an obstacle 3 times
+                if visited_counter[(cx, cy)] >= 3:
+                    positions += 1
+                    break
             else:
                 cx, cy = nx, ny
 
