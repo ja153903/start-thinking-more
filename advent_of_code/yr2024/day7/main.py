@@ -1,4 +1,5 @@
 import os
+from functools import lru_cache
 from typing import TypedDict
 
 
@@ -20,19 +21,23 @@ def parse_input() -> list[Equation]:
             res, rest = line.split(": ")
 
             result.append(
-                {"test_value": int(res), "numbers": [int(x) for x in rest.split(" ")]}
+                {"test_value": int(res), "numbers": [int(x) for x in rest.split()]}
             )
 
         return result
 
 
-def backtrack(current: int, numbers: list[int], index: int, target: int) -> bool:
-    if index == len(numbers):
-        return current == target
+def backtrack(numbers: list[int], target: int) -> bool:
+    @lru_cache
+    def _rec(current: int, index: int) -> bool:
+        if index == len(numbers):
+            return current == target
 
-    return backtrack(current + numbers[index], numbers, index + 1, target) or backtrack(
-        current * numbers[index], numbers, index + 1, target
-    )
+        return _rec(current + numbers[index], index + 1) or _rec(
+            current * numbers[index], index + 1
+        )
+
+    return _rec(0, 0)
 
 
 def part1():
@@ -40,25 +45,25 @@ def part1():
 
     res = 0
     for equation in equations:
-        if backtrack(0, equation["numbers"], 0, equation["test_value"]):
+        if backtrack(equation["numbers"], equation["test_value"]):
             res += equation["test_value"]
 
     return res
 
 
-def backtrack_with_concat(
-    current: int, numbers: list[int], index: int, target: int
-) -> bool:
-    if index == len(numbers):
-        return current == target
+def backtrack_with_concat(numbers: list[int], target: int) -> bool:
+    @lru_cache
+    def _rec(current: int, index: int) -> bool:
+        if index == len(numbers):
+            return current == target
 
-    return (
-        backtrack_with_concat(current + numbers[index], numbers, index + 1, target)
-        or backtrack_with_concat(current * numbers[index], numbers, index + 1, target)
-        or backtrack_with_concat(
-            int(f"{current}{numbers[index]}"), numbers, index + 1, target
+        return (
+            _rec(current + numbers[index], index + 1)
+            or _rec(current * numbers[index], index + 1)
+            or _rec(int(f"{current}{numbers[index]}"), index + 1)
         )
-    )
+
+    return _rec(0, 0)
 
 
 def part2():
@@ -66,7 +71,7 @@ def part2():
 
     res = 0
     for equation in equations:
-        if backtrack_with_concat(0, equation["numbers"], 0, equation["test_value"]):
+        if backtrack_with_concat(equation["numbers"], equation["test_value"]):
             res += equation["test_value"]
 
     return res
