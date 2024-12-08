@@ -13,7 +13,7 @@ PATH_TO_FILE = f"{os.path.dirname(os.path.realpath(__file__))}/data.in"
 
 def parse_input() -> list[Equation]:
     with open(PATH_TO_FILE, "r") as f:
-        lines = [line.strip() for line in f.readlines()]
+        lines = f.read().strip().split("\n")
 
         result: list[Equation] = []
 

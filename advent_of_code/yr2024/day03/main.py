@@ -6,7 +6,7 @@ PATH_TO_FILE = f"{os.path.dirname(os.path.realpath(__file__))}/data.in"
 
 def parse_input():
     with open(PATH_TO_FILE, "r") as f:
-        input = f.read()
+        input = f.read().strip()
         results: list[tuple[str, str]] = re.findall(
             r"mul\((?P<l>\d+),(?P<r>\d+)\)", input
         )

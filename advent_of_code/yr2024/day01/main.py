@@ -6,10 +6,12 @@ PATH_TO_FILE = f"{os.path.dirname(os.path.realpath(__file__))}/data.in"
 
 def parse_input() -> tuple[list[int], list[int]]:
     with open(PATH_TO_FILE, "r") as f:
-        data = f.readlines()
-        lv, rv = [], []
+        data = f.read().strip().split("\n")
+        lv: list[int] = []
+        rv: list[int] = []
+
         for line in data:
-            left, right = line.strip().split()
+            left, right = line.split()
             lv.append(int(left))
             rv.append(int(right))
 

@@ -7,7 +7,7 @@ PATH_TO_FILE = f"{os.path.dirname(os.path.realpath(__file__))}/data.in"
 
 def parse_input():
     with open(PATH_TO_FILE, "r") as f:
-        return [list(line.strip()) for line in f.readlines()]
+        return [list(line) for line in f.read().strip().split("\n")]
 
 
 def part1():
