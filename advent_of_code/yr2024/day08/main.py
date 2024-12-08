@@ -1,4 +1,5 @@
 from collections import defaultdict
+from itertools import combinations
 import os
 
 PATH_TO_FILE = f"{os.path.dirname(os.path.realpath(__file__))}/data.in"
@@ -23,21 +24,19 @@ def part1():
                 m[grid[row][col]].append((row, col))
 
     for antennas in m.values():
-        for i in range(len(antennas)):
-            for j in range(i + 1, len(antennas)):
-                delta_row = antennas[j][0] - antennas[i][0]
-                delta_col = antennas[j][1] - antennas[i][1]
+        for a, b in combinations(antennas, 2):
+            delta_row = b[0] - a[0]
+            delta_col = b[1] - a[1]
+            sr, sc = a
+            er, ec = b
 
-                sr, sc = antennas[i]
-                er, ec = antennas[j]
+            nr, nc = sr - delta_row, sc - delta_col
+            if 0 <= nr < len(grid) and 0 <= nc < len(grid[0]):
+                antinodes[nr][nc] = "#"
 
-                nr, nc = sr - delta_row, sc - delta_col
-                if 0 <= nr < len(grid) and 0 <= nc < len(grid[0]):
-                    antinodes[nr][nc] = "#"
-
-                nr, nc = er + delta_row, ec + delta_col
-                if 0 <= nr < len(grid) and 0 <= nc < len(grid[0]):
-                    antinodes[nr][nc] = "#"
+            nr, nc = er + delta_row, ec + delta_col
+            if 0 <= nr < len(grid) and 0 <= nc < len(grid[0]):
+                antinodes[nr][nc] = "#"
 
     res = 0
     for row in range(rows):
@@ -61,25 +60,23 @@ def part2():
                 m[grid[row][col]].append((row, col))
 
     for antennas in m.values():
-        for i in range(len(antennas)):
-            for j in range(i + 1, len(antennas)):
-                delta_row = antennas[j][0] - antennas[i][0]
-                delta_col = antennas[j][1] - antennas[i][1]
+        for a, b in combinations(antennas, 2):
+            delta_row = b[0] - a[0]
+            delta_col = b[1] - a[1]
+            sr, sc = a
+            er, ec = b
 
-                sr, sc = antennas[i]
-                er, ec = antennas[j]
+            while 0 <= sr < len(grid) and 0 <= sc < len(grid[0]):
+                nr, nc = sr - delta_row, sc - delta_col
+                if 0 <= nr < len(grid) and 0 <= nc < len(grid[0]):
+                    antinodes[nr][nc] = "#"
+                sr, sc = nr, nc
 
-                while 0 <= sr < len(grid) and 0 <= sc < len(grid[0]):
-                    nr, nc = sr - delta_row, sc - delta_col
-                    if 0 <= nr < len(grid) and 0 <= nc < len(grid[0]):
-                        antinodes[nr][nc] = "#"
-                    sr, sc = nr, nc
-
-                while 0 <= er < len(grid) and 0 <= ec < len(grid[0]):
-                    nr, nc = er + delta_row, ec + delta_col
-                    if 0 <= nr < len(grid) and 0 <= nc < len(grid[0]):
-                        antinodes[nr][nc] = "#"
-                    er, ec = nr, nc
+            while 0 <= er < len(grid) and 0 <= ec < len(grid[0]):
+                nr, nc = er + delta_row, ec + delta_col
+                if 0 <= nr < len(grid) and 0 <= nc < len(grid[0]):
+                    antinodes[nr][nc] = "#"
+                er, ec = nr, nc
 
     res = 0
     for row in range(rows):
