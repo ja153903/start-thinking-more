@@ -7,6 +7,7 @@ requires-python = ">=3.12"
 dependencies = [
     "black>=24.10.0",
     "neovim>=0.3.1",
+    "pytest>=8.3.4",
     "ruff>=0.8.1",
 ]
 
@@ -88,3 +89,14 @@ docstring-code-format = false
 # This only has an effect when the `docstring-code-format` setting is
 # enabled.
 docstring-code-line-length = "dynamic"
+
+[dependency-groups]
+dev = [
+    "pytest>=8.3.4",
+]
+lint = [
+    "ruff>=0.8.1",
+]
+editor = [
+    "neovim>=0.3.1",
+]
