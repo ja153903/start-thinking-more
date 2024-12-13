@@ -1,6 +1,7 @@
 import os
 import re
 import numpy as np
+import numpy.typing as npt
 
 
 PATH_TO_FILE = f"{os.path.dirname(os.path.realpath(__file__))}/data.in"
@@ -47,28 +48,30 @@ def parse_input(prize_increase: int = 0):
         return equations
 
 
+def compute_tokens_consumed(
+    eq_a: npt.NDArray[np.int_], eq_b: npt.NDArray[np.int_]
+) -> int:
+    sol = np.linalg.solve(eq_a, eq_b)
+
+    ax, bx = eq_a[0]
+    ay, by = eq_a[1]
+    px, py = eq_b
+
+    a, b = sol
+    a, b = round(a), round(b)
+
+    px_approx = a * ax + b * bx
+    py_approx = a * ay + b * by
+
+    if px_approx == px and py_approx == py:
+        return a * 3 + b
+
+    return 0
+
+
 def part1():
     equations = parse_input()
-
-    res = 0
-
-    for equation in equations:
-        sol = np.linalg.solve(equation["a"], equation["b"])
-
-        ax, bx = equation["a"][0]
-        ay, by = equation["a"][1]
-        px, py = equation["b"]
-
-        a, b = sol
-        a, b = round(a), round(b)
-
-        px_approx = a * ax + b * bx
-        py_approx = a * ay + b * by
-
-        if px_approx == px and py_approx == py:
-            res += a * 3 + b
-
-    return res
+    return sum(compute_tokens_consumed(eq["a"], eq["b"]) for eq in equations)
 
 
 PART2_PRIZE_INCREASE = 10_000_000_000_000
@@ -76,26 +79,7 @@ PART2_PRIZE_INCREASE = 10_000_000_000_000
 
 def part2():
     equations = parse_input(PART2_PRIZE_INCREASE)
-
-    res = 0
-
-    for equation in equations:
-        sol = np.linalg.solve(equation["a"], equation["b"])
-
-        ax, bx = equation["a"][0]
-        ay, by = equation["a"][1]
-        px, py = equation["b"]
-
-        a, b = sol
-        a, b = round(a), round(b)
-
-        px_approx = a * ax + b * bx
-        py_approx = a * ay + b * by
-
-        if px_approx == px and py_approx == py:
-            res += a * 3 + b
-
-    return res
+    return sum(compute_tokens_consumed(eq["a"], eq["b"]) for eq in equations)
 
 
 if __name__ == "__main__":
