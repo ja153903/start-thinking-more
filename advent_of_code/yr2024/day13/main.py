@@ -6,6 +6,11 @@ import numpy as np
 PATH_TO_FILE = f"{os.path.dirname(os.path.realpath(__file__))}/data.in"
 
 
+BUTTON_A_REGEX = re.compile(r"Button A: X\+(?P<ax>\d+), Y\+(?P<ay>\d+)")
+BUTTON_B_REGEX = re.compile(r"Button B: X\+(?P<bx>\d+), Y\+(?P<by>\d+)")
+PRIZE_REGEX = re.compile(r"Prize: X=(?P<px>\d+), Y=(?P<py>\d+)")
+
+
 def parse_input(prize_increase: int = 0):
     with open(PATH_TO_FILE, "r") as f:
         data = f.read().strip().split("\n\n")
@@ -15,9 +20,9 @@ def parse_input(prize_increase: int = 0):
         for line in data:
             a, b, p = line.split("\n")
 
-            a_btn = re.match(r"Button A: X\+(?P<ax>\d+), Y\+(?P<ay>\d+)", a)
-            b_btn = re.match(r"Button B: X\+(?P<bx>\d+), Y\+(?P<by>\d+)", b)
-            prize = re.match(r"Prize: X=(?P<px>\d+), Y=(?P<py>\d+)", p)
+            a_btn = BUTTON_A_REGEX.match(a)
+            b_btn = BUTTON_B_REGEX.match(b)
+            prize = PRIZE_REGEX.match(p)
 
             if a_btn and b_btn and prize:
                 equations.append(
