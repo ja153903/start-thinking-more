@@ -21,7 +21,6 @@ else:
 
 
 class Robot(TypedDict):
-    id: int
     px: int
     py: int
     vx: int
@@ -40,7 +39,6 @@ def parse_input():
             if match:
                 data.append(
                     {
-                        "id": i,
                         "px": int(match.group("px")),
                         "py": int(match.group("py")),
                         "vx": int(match.group("vx")),
