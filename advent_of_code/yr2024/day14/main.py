@@ -5,6 +5,7 @@ from typing import TypedDict
 from collections import Counter
 
 
+# My ass thought I'd have to look at every grid print out for the tree
 def pretty_print(grid: list[list[int]]):
     time.sleep(1)
     for row in grid:
