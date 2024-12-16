@@ -10,4 +10,4 @@ wheels/
 .venv
 
 data.in
-data.test.in
+data.test*.in
