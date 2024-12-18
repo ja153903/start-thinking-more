@@ -97,9 +97,12 @@ def part2():
     falling_bytes = parse_input()
     grid = [["." for _ in range(71)] for _ in range(71)]
 
-    for fbyte in falling_bytes:
+    for i, fbyte in enumerate(falling_bytes):
         bx, by = fbyte
         grid[by][bx] = "#"
+
+        if i < 1024:
+            continue
 
         if dijkstra(grid) is None:
             return f"{bx},{by}"
