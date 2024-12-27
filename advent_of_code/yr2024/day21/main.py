@@ -10,6 +10,10 @@ def parse_input():
 
 def part1():
     seqs = parse_input()
+    print(seqs)
+
+
+def part2(): ...
 
 
 if __name__ == "__main__":
