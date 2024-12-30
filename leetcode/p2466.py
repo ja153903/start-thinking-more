@@ -5,7 +5,6 @@ MOD = 10**9 + 7
 
 
 class Solution:
-    # TODO: This solution fails time limit constraints, but is a workable solution
     def countGoodStrings(self, low: int, high: int, zero: int, one: int) -> int:
         @lru_cache
         def inner(path: str) -> int:
