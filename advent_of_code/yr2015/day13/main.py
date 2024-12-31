@@ -1,7 +1,7 @@
 import os
 import re
 from typing import NamedTuple
-from collections import defaultdict, deque
+from collections import defaultdict
 
 PATH_TO_FILE = f"{os.path.dirname(os.path.realpath(__file__))}/data.in"
 
@@ -38,28 +38,7 @@ def part1():
         edge_mp[(edge.u, edge.v)] += edge.w
         edge_mp[(edge.v, edge.u)] += edge.w
 
-    # it doesn't matter where we start, we want to minimize the total weight of visiting all the nodes in the graph
-    res = float("inf")
-
-    for node in g.keys():
-        # start with this node and fill out
-        queue = deque()
-        queue.append((node, 0, set()))
-
-        while queue:
-            n, w, visited = queue.popleft()
-
-            visited.add(n)
-
-            if len(visited) == len(g.keys()):
-                res = min(res, w)
-                continue
-
-            for nei in g[n]:
-                if nei not in visited:
-                    queue.append((nei, w + edge_mp[(n, nei)], visited.copy()))
-
-    return res
+    return 0
 
 
 def part2(): ...
