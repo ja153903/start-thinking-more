@@ -38,7 +38,7 @@ def part1():
         edge_mp[(edge.u, edge.v)] += edge.w
         edge_mp[(edge.v, edge.u)] += edge.w
 
-    return 0
+    raise NotImplementedError
 
 
 def part2(): ...
