@@ -13,7 +13,6 @@ class Solution:
         for value in dd.values():
             if len(value) > 1:
                 first, *_, last = value
-
                 res += len(set(s[first + 1 : last]))
 
         return res
