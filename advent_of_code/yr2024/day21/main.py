@@ -8,8 +8,7 @@ def parse_input():
         return f.read().strip().splitlines()
 
 
-def part1():
-    seqs = parse_input()
+def part1(): ...
 
 
 def part2(): ...
