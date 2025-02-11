@@ -95,10 +95,12 @@ docstring-code-line-length = "dynamic"
 reportConstantRedefinition = false
 reportMissingImports = "error"
 reportMissingTypeStubs = false
+reportMissingParameterType = false
 reportUnknownVariableType = false
 reportUnknownArgumentType = false
 reportUnknownMemberType = false
 reportUnknownParameterType = false
+reportUnknownLambdaType = false
 reportExplicitAny = false
 reportAny = false
 
